@@ -161,7 +161,7 @@ static inline void create_16_sub_keys(uint64_t perm_1_key_56, uint64_t *sub_key)
     split_bit_block(perm_1_key_56, &left_28, &right_28, 56);
     for (int i = 0; i< 16; i++) {
         apply_rotations_lr_28_key(&left_28, &right_28, i);
-        u_int64_t combined_left_right = (((uint64_t) left_28) << 28) | (uint64_t) right_28 ;
+        uint64_t combined_left_right = (((uint64_t) left_28) << 28) | (uint64_t) right_28 ;
         sub_key[i] = apply_map(combined_left_right, PC2, 56, 48);
     }
 }
@@ -200,7 +200,7 @@ uint64_t des(uint64_t initial_bit_block, uint64_t key, char mode) {
     split_bit_block(perm_1_key_56, &left_28, &right_28, 56);
     uint64_t sub_key[16];
     create_16_sub_keys(perm_1_key_56, sub_key);
-    u_int64_t fiestel_rounds_output = apply_16_fiestel_rounds(perm_msg_block_right_32, perm_msg_block_left_32, sub_key, mode);
+    uint64_t fiestel_rounds_output = apply_16_fiestel_rounds(perm_msg_block_right_32, perm_msg_block_left_32, sub_key, mode);
     uint64_t FP_output = apply_map(fiestel_rounds_output, FP, 64, 64);
     return FP_output;
 }
